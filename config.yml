@@ -1,0 +1,21 @@
+countries:
+  - US
+  - IN
+categories:
+  - Beauty
+  - Electronics
+  - Fitness
+  - Home
+  - Food
+sources:
+  search: 1.0
+  reddit: 0.8
+  youtube: 0.9
+  marketplace: 1.0
+  news: 0.6
+weights:
+  velocity: 0.30
+  confidence: 0.20
+  diffusion: 0.10
+  commercial: 0.25
+  headroom: 0.15
