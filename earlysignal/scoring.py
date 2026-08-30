@@ -43,10 +43,12 @@ def calculate_scores(observations: pd.DataFrame, weights: dict, as_of=None) -> p
         commercial = clip(100 * (.40 * intent + .30 * sentiment + .30 * demand))
         sellers = math.tanh(latest.seller_count.mean() / 75)
         saturation = clip(100 * (.40 * sellers + .30 * latest.ad_intensity.mean() + .30 * latest.incumbent_share.mean()))
-        other = "IN" if country == "US" else "US"
-        peer = df[(df.country == other) & (df.product == product)]
-        peer_recent = peer.groupby("observed_at").value.mean().sort_index()
-        diffusion = 0 if peer.empty else clip(50 + 35 * math.tanh(_growth(peer_recent, 28)))
+        peers = df[(df.country != country) & (df["product"] == product)]
+        peer_momentum = [
+            _growth(market.groupby("observed_at").value.mean().sort_index(), 28)
+            for _, market in peers.groupby("country")
+        ]
+        diffusion = 0 if not peer_momentum else clip(50 + 35 * math.tanh(sum(peer_momentum) / len(peer_momentum)))
         fmos = clip(weights["velocity"] * velocity + weights["confidence"] * confidence +
                     weights["diffusion"] * diffusion + weights["commercial"] * commercial +
                     weights["headroom"] * (100 - saturation))

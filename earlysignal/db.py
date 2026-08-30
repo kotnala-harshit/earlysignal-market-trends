@@ -6,7 +6,7 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS observations (
   id INTEGER PRIMARY KEY,
   observed_at TEXT NOT NULL,
-  country TEXT NOT NULL CHECK(country IN ('US','IN')),
+  country TEXT NOT NULL CHECK(country IN ('US','GB','EU','IN')),
   source TEXT NOT NULL,
   product TEXT NOT NULL,
   category TEXT NOT NULL,

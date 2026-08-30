@@ -1,5 +1,7 @@
 countries:
   - US
+  - GB
+  - EU
   - IN
 categories:
   - Beauty

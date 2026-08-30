@@ -30,7 +30,8 @@ class PipelineTest(unittest.TestCase):
         weights = dict(self.config["weights"], source_weights=self.config["sources"])
         scores = calculate_scores(self.frame, weights)
         self.assertTrue(scores.fmos.between(0, 100).all())
-        self.assertEqual(set(scores.country), {"US", "IN"})
+        self.assertEqual(set(scores.country), {"US", "GB", "EU", "IN"})
+        self.assertEqual(self.config["countries"], ["US", "GB", "EU", "IN"])
         self.assertGreater(scores.confidence.min(), 0)
 
     def test_backtest_has_samples(self):

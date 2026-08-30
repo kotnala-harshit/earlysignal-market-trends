@@ -2,7 +2,7 @@
 
 Each source is scaled to 0–100 within its product/country history. This preserves direction and relative change without pretending unlike units are directly comparable.
 
-**Velocity** blends bounded 7-day growth, 28-day growth, and mean daily change over the latest 14 points. **Cross-platform confidence** combines weighted source breadth (45%), directional agreement (35%), and 14-day completeness (20%). **Geographic diffusion** uses 28-day momentum for the same product in the other market. **Saturation** combines seller density (40%), ad intensity (30%), and incumbent share (30%). **Commercial opportunity** combines purchase intent (40%), sentiment (30%), and current normalized demand (30%).
+**Velocity** blends bounded 7-day growth, 28-day growth, and mean daily change over the latest 14 points. **Cross-platform confidence** combines weighted source breadth (45%), directional agreement (35%), and 14-day completeness (20%). **Geographic diffusion** averages 28-day momentum for the same product across the other configured markets. **Saturation** combines seller density (40%), ad intensity (30%), and incumbent share (30%). **Commercial opportunity** combines purchase intent (40%), sentiment (30%), and current normalized demand (30%).
 
 The default score is:
 

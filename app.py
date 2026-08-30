@@ -10,7 +10,7 @@ from earlysignal.ingest import read_csv, upsert
 
 st.set_page_config(page_title="EarlySignal", page_icon="📈", layout="wide")
 st.title("EarlySignal")
-st.caption("Product trend intelligence · United States + India")
+st.caption("Product trend intelligence · United States, United Kingdom, Europe + India")
 connection, config = connect(), load_config()
 data = observations(connection)
 if data.empty:
@@ -18,11 +18,11 @@ if data.empty:
     data = observations(connection)
 scores = score(connection, config)
 
-country = st.sidebar.radio("Market", ["Both", "US", "IN"], horizontal=True)
+country = st.sidebar.selectbox("Market", ["All"] + config["countries"])
 category = st.sidebar.selectbox("Category", ["All"] + sorted(scores.category.unique()))
 minimum = st.sidebar.slider("Minimum opportunity score", 0, 100, 45)
 filtered = scores[scores.fmos >= minimum]
-if country != "Both":
+if country != "All":
     filtered = filtered[filtered.country == country]
 if category != "All":
     filtered = filtered[filtered.category == category]
@@ -45,14 +45,15 @@ with right:
     st.plotly_chart(px.scatter(filtered, x="saturation", y="fmos", color="country", size="velocity",
                                hover_name="product", range_x=[0,100], range_y=[0,100]), use_container_width=True)
 
-st.subheader("US ↔ India comparison")
+st.subheader("Market comparison")
 comparison = scores.pivot_table(index=["product", "category"], columns="country", values="fmos").reset_index()
-if {"US", "IN"}.issubset(comparison.columns):
-    melted = comparison.melt(id_vars=["product", "category"], value_vars=["US", "IN"], var_name="country", value_name="FMOS")
+markets = [market for market in config["countries"] if market in comparison.columns]
+if markets:
+    melted = comparison.melt(id_vars=["product", "category"], value_vars=markets, var_name="country", value_name="FMOS")
     st.plotly_chart(px.bar(melted, x="product", y="FMOS", color="country", barmode="group"), use_container_width=True)
 
-product = st.selectbox("Inspect a product", sorted(data.product.unique()))
-history = data[data.product == product].groupby(["observed_at", "country", "source"], as_index=False).value.mean()
+product = st.selectbox("Inspect a product", sorted(data["product"].unique()))
+history = data[data["product"] == product].groupby(["observed_at", "country", "source"], as_index=False).value.mean()
 st.plotly_chart(px.line(history, x="observed_at", y="value", color="source", line_dash="country",
                        title=f"Raw source signals · {product}"), use_container_width=True)
 

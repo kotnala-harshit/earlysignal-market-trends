@@ -1,6 +1,6 @@
 # EarlySignal Market Trends
 
-Open-source trend intelligence for finding product opportunities early in the **United States and India**. EarlySignal combines search, social, marketplace, and media signals into an explainable **First-Mover Opportunity Score (FMOS)**, with country comparison and walk-forward backtesting.
+Open-source trend intelligence for finding product opportunities early in the **United States, United Kingdom, Europe, and India**. EarlySignal combines search, social, marketplace, and media signals into an explainable **First-Mover Opportunity Score (FMOS)**, with market comparison and walk-forward backtesting.
 
 ![Dashboard preview](docs/dashboard-preview.svg)
 
@@ -23,7 +23,9 @@ python -m earlysignal.cli backtest --horizon 14
 python -m unittest discover -s tests -v
 ```
 
-The included synthetic dataset makes every feature runnable without API keys. It is clearly labelled demo data and must not be used for commercial decisions.
+Regenerate the sample dataset with `python scripts/generate_demo.py`.
+
+The included synthetic dataset covers US, GB, EU, and IN and makes every feature runnable without API keys. Here, **EU is an aggregate Europe market**, while GB represents the United Kingdom. Add individual European country codes when country-level resolution is needed. Demo data must not be used for commercial decisions.
 
 ## Score methodology
 
@@ -33,7 +35,7 @@ All components are clipped to 0–100 and calculated only from observations avai
 |---|---|---:|
 | Velocity | 7-day growth, 28-day growth, and recent slope | 30% |
 | Cross-platform confidence | Source breadth, agreement, and completeness | 20% |
-| Geographic diffusion | Momentum for the same product in the other country | 10% |
+| Geographic diffusion | Mean momentum for the same product across the other markets | 10% |
 | Commercial opportunity | Purchase intent, sentiment, and demand level | 25% |
 | Saturation headroom | Inverse seller density, ad intensity, and incumbent share | 15% |
 

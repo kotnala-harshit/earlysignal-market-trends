@@ -1,6 +1,6 @@
 # Architecture
 
-EarlySignal is local-first, reproducible, and honest about unavailable APIs. One normalized observation contract separates acquisition from analytics. SQLite supports a single analyst with zero services; the schema can migrate directly to PostgreSQL when concurrent ingestion is required.
+EarlySignal is local-first, reproducible, and honest about unavailable APIs. It covers US, UK (GB), aggregate Europe (EU), and India (IN). One normalized observation contract separates acquisition from analytics. SQLite supports a single analyst with zero services; the schema can migrate directly to PostgreSQL when concurrent ingestion is required.
 
 ## Data flow
 
