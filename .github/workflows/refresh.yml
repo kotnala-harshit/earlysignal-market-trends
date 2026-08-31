@@ -1,0 +1,36 @@
+name: Refresh trend pipeline
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: trend-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Build and validate trend data
+        env:
+          EARLYSIGNAL_DB: /tmp/earlysignal.db
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GOOGLE_TRENDS_API_KEY: ${{ secrets.GOOGLE_TRENDS_API_KEY }}
+          GOOGLE_TRENDS_API_URL: ${{ secrets.GOOGLE_TRENDS_API_URL }}
+        run: |
+          python -m earlysignal.cli init --demo
+          python -m earlysignal.cli score
+          python -m earlysignal.cli backtest --horizon 14
+          python -m unittest discover -s tests -v

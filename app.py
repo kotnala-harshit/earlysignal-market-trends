@@ -9,6 +9,7 @@ from earlysignal.db import connect
 from earlysignal.ingest import read_csv, upsert
 
 st.set_page_config(page_title="EarlySignal", page_icon="📈", layout="wide")
+st.markdown('<meta http-equiv="refresh" content="900">', unsafe_allow_html=True)
 st.title("EarlySignal")
 st.caption("Product trend intelligence · United States, United Kingdom, Europe + India")
 connection, config = connect(), load_config()

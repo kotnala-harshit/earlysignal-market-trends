@@ -15,6 +15,10 @@ python -m earlysignal.cli init --demo
 streamlit run app.py
 ```
 
+The open dashboard reloads its data every 15 minutes. GitHub Actions also runs the ingestion, scoring, backtest, and test pipeline every 15 minutes; it can be started manually from **Actions → Refresh trend pipeline**.
+
+The scheduled workflow validates demo data until live API secrets are configured. Streamlit Community Cloud may still sleep when nobody is viewing an app—automatic page refresh does not run after the host has suspended the app. Configure deployment visibility/availability in Streamlit Cloud or use an always-on host when continuous uptime is required.
+
 Run the pipeline and tests:
 
 ```bash
