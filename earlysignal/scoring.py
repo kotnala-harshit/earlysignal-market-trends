@@ -3,6 +3,9 @@ from datetime import timedelta
 
 import pandas as pd
 
+SCORE_COLUMNS = ["scored_at", "country", "product", "category", "velocity", "confidence",
+                 "diffusion", "saturation", "commercial", "fmos", "stage"]
+
 
 def clip(value: float) -> float:
     return round(max(0.0, min(100.0, float(value))), 2)
@@ -19,7 +22,7 @@ def _growth(series: pd.Series, days: int) -> float:
 
 def calculate_scores(observations: pd.DataFrame, weights: dict, as_of=None) -> pd.DataFrame:
     if observations.empty:
-        return pd.DataFrame()
+        return pd.DataFrame(columns=SCORE_COLUMNS)
     df = observations.copy()
     df["observed_at"] = pd.to_datetime(df["observed_at"])
     cutoff = pd.Timestamp(as_of) if as_of is not None else df["observed_at"].max()
@@ -57,4 +60,4 @@ def calculate_scores(observations: pd.DataFrame, weights: dict, as_of=None) -> p
                      "category": category, "velocity": velocity, "confidence": confidence,
                      "diffusion": diffusion, "saturation": saturation, "commercial": commercial,
                      "fmos": fmos, "stage": stage})
-    return pd.DataFrame(rows).sort_values("fmos", ascending=False)
+    return pd.DataFrame(rows, columns=SCORE_COLUMNS).sort_values("fmos", ascending=False)

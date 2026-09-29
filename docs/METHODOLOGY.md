@@ -21,6 +21,8 @@ Weights are explicit in `config.yml` and should be calibrated per category on ou
 
 Walk-forward evaluation calculates scores using observations at or before each cutoff, then measures average-source growth over the future horizon. A hit is FMOS ≥60 followed by ≥10% growth. Metrics are precision among selected opportunities and Spearman rank correlation between score and future growth.
 
+Cutoffs start 28 calendar days after the first observation and advance by the configured number of calendar days (7 by default). A product/market is evaluated only when it has observations on both the cutoff and the exact horizon endpoint. Missing endpoints are skipped, so a shorter observation window is never reported as a full-horizon result. Horizon and step must be positive. Insufficient history returns zero samples.
+
 Synthetic results do not validate real-world predictive power. Before commercial use, backtest licensed historical data with realistic availability timestamps, fees, stock-outs, and multiple-comparison controls.
 
 ## Limitations

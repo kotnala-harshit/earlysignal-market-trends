@@ -47,6 +47,7 @@ def main():
         results = walk_forward(observations(connection), weights, args.horizon)
         connection.execute("DELETE FROM backtests")
         results.to_sql("backtests", connection, if_exists="append", index=False)
+        connection.commit()
         print(summary(results))
 
 
