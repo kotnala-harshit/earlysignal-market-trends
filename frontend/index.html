@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EarlySignal · Market intelligence</title>
+<meta name="description" content="Explore emerging product opportunities across four markets with explainable scores and source-level signals.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23294be8'/%3E%3Cpath d='M6 22h4V15h5v-5h5V6h6v20H6z' fill='white'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
+</head>
+<body>
+<aside class="sidebar">
+<a class="brand" href="#overview"><span class="brand-mark">▥</span> EarlySignal<span class="brand-dot">®</span></a>
+<div class="workspace-label">RESEARCH WORKSPACE</div>
+<nav aria-label="Main navigation"><a class="nav-link active" href="#overview"><span>◫</span> Opportunity explorer</a><a class="nav-link" href="#signals"><span>⌁</span> Product signals</a><a class="nav-link" href="#validation"><span>◷</span> Backtest health</a><a class="nav-link" href="#methodology"><span>≡</span> Methodology</a></nav>
+<div class="sidebar-note"><span class="eyebrow">THE EARLY ADVANTAGE</span><p>Find the signal.<br>Understand the opportunity.</p><span>Search · Social · Commerce</span></div>
+<a class="repo-link" href="https://github.com/kotnala-harshit/earlysignal-market-trends" target="_blank" rel="noreferrer">View project on GitHub ↗</a>
+</aside>
+<main>
+<header class="topbar"><span>Workspace <span class="slash">/</span> Market intelligence</span><span class="snapshot-label">RESULTS SNAPSHOT</span></header>
+<div class="content">
+<section id="overview">
+<div class="page-heading"><div><div class="eyebrow">DISCOVER WHAT'S NEXT</div><h1>Opportunity explorer<span class="title-dot">.</span></h1><p class="subtitle">Emerging products. Four markets. One clearer picture.</p></div><button id="download" class="button" disabled><span aria-hidden="true">↓</span> Export results</button></div>
+<div class="data-banner" id="data-banner" role="status"><span class="banner-icon">i</span><span id="data-status">Loading pipeline results…</span><span id="updated" class="updated"></span></div>
+<div id="load-error" class="error" role="alert" hidden>We couldn't load the results. <button id="retry" class="button">Try again</button></div>
+<form id="filters" class="filters" aria-label="Filter opportunities">
+<label class="search-label"><span class="field-title">Search products</span><input id="search" type="search" placeholder="Search products…" autocomplete="off"></label>
+<label><span class="field-title">Market</span><select id="market"><option value="All">All markets</option></select></label>
+<label><span class="field-title">Category</span><select id="category"><option value="All">All categories</option></select></label>
+<label><span class="field-title">Stage</span><select id="stage"><option value="All">All stages</option><option>Breakout</option><option>Emerging</option><option>Watch</option><option>Mature</option></select></label>
+<label class="range-label"><span class="field-title">Min. score <output id="min-label" for="minimum">45</output></span><input id="minimum" type="range" min="0" max="100" value="45"></label>
+<button class="reset" type="reset">Reset</button>
+</form>
+<div class="metrics" aria-live="polite">
+<article class="metric"><span>Opportunities</span><strong id="count">—</strong><small>Matching your filters</small></article>
+<article class="metric"><span>Highest opportunity score</span><strong id="top-score">—</strong><small id="top-name">Out of 100</small></article>
+<article class="metric"><span>Breakout products</span><strong id="breakouts">—</strong><small>High momentum, low saturation</small></article>
+<article class="metric"><span>Markets in view</span><strong id="market-count">—</strong><small id="sources-count">Cross-platform signals</small></article>
+</div>
+<div class="overview-grid">
+<section class="panel leaderboard"><div class="panel-heading"><div><h2>Opportunity leaderboard</h2><p>Ranked by first-mover opportunity score</p></div><span id="result-count" class="subtle-chip">0 results</span></div>
+<div class="table-wrap"><table><thead><tr><th scope="col">Product / category</th><th scope="col">Market</th><th scope="col"><button id="sort-score" aria-label="Sort score ascending">Score ↓</button></th><th scope="col">Stage</th><th scope="col" class="velocity-col">Velocity</th></tr></thead><tbody id="leaderboard"></tbody></table></div><div id="empty" class="empty" hidden><strong>No matching opportunities</strong><p>Try a lower minimum score or reset your filters.</p><button class="button" id="empty-reset">Reset filters</button></div><div class="panel-foot">Select a product to explore its signals below.</div></section>
+<section class="panel map-panel"><div class="panel-heading"><div><h2>The opportunity map</h2><p>Find demand with room to grow</p></div></div><div id="scatter" class="scatter"></div><div id="market-legend" class="legend"></div><p class="chart-note">Higher score + lower saturation = more headroom.</p></section>
+</div>
+</section>
+<section id="signals" class="signals-section"><div class="section-heading"><div><div class="eyebrow">LOOK BENEATH THE SCORE</div><h2>Product signals</h2></div><label class="product-picker"><span class="sr-only">Inspect product</span><select id="product"></select></label></div>
+<div id="no-product" class="empty" hidden>No product signals match the current filters.</div>
+<div id="product-content"><div class="signal-grid"><section class="panel history-panel"><div class="panel-heading"><div><h3 id="history-title">Signal momentum</h3><p>Source signals indexed to their own peak = 100</p></div><span class="subtle-chip" id="history-period"></span></div><div id="history-chart"></div><div id="source-legend" class="legend"></div></section>
+<section class="panel market-panel"><div class="panel-heading"><div><h3>Across the markets</h3><p>Opportunity score for the selected product</p></div></div><div id="market-bars"></div><p class="chart-note">All markets shown for comparison.</p></section></div>
+<section class="panel drivers-panel"><div class="panel-heading"><div><h3>What drives the score?</h3><p id="driver-caption">Component scores out of 100</p></div></div><div id="drivers" class="drivers"></div></section></div>
+</section>
+<section id="validation" class="panel validation"><div class="validation-intro"><span class="eyebrow">CHECK THE EVIDENCE</span><h2>Backtest health</h2><p id="backtest-description">14-day outcomes, evaluated using only information available at each cutoff.</p></div><div class="validation-stat"><strong id="precision">—</strong><span>Precision at score ≥60</span></div><div class="validation-stat"><strong id="correlation">—</strong><span>Rank correlation</span></div><div class="validation-stat"><strong id="samples">—</strong><span>Evaluation samples</span></div><p id="validation-note" class="validation-note">Synthetic results do not establish real-world predictive power.</p></section>
+<details id="methodology" class="panel methodology"><summary>How to read these results <span>Score methodology & limitations</span></summary><div class="methodology-body"><p>The first-mover opportunity score (FMOS) combines velocity (30%), cross-platform confidence (20%), geographic diffusion (10%), commercial opportunity (25%), and saturation headroom (15%). Every component is bounded from 0 to 100.</p><p><b>Breakout:</b> velocity ≥75 and saturation &lt;55. <b>Emerging:</b> score ≥60. <b>Mature:</b> saturation ≥65. Otherwise, <b>Watch</b>. Labels follow this order.</p><p>Source histories are normalized separately for each product, market, and source, then averaged by source when multiple markets are selected. They show relative direction, not comparable market size. Backtests require observations at both the cutoff and the exact 14-day endpoint.</p><p>These scores are research leads, not demand forecasts. Validate opportunities with customer research and commercial evidence. This dashboard is an exported snapshot; it does not collect live signals.</p><a href="https://github.com/kotnala-harshit/earlysignal-market-trends/blob/main/docs/METHODOLOGY.md" target="_blank" rel="noreferrer">Read the full methodology ↗</a></div></details>
+<footer><span><b>EarlySignal</b> · See the opportunity earlier.</span><span id="footer-data">Results from the EarlySignal pipeline</span></footer>
+</div>
+</main>
+</body></html>
