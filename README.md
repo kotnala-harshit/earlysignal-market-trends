@@ -4,6 +4,29 @@ Open-source trend intelligence for finding product opportunities early in the **
 
 ![Dashboard preview](docs/dashboard-preview.svg)
 
+## Website dashboard
+
+[Open EarlySignal](https://earlysignal-market-dashboard.harshitkotnala5.chatgpt.site) — hosted privately for the owner's account.
+
+The responsive frontend in `frontend/` includes product search, market/category/stage filters, sortable scores, a saturation map, source history, cross-market comparisons, score components, backtest metrics, and CSV export. It runs without Node or browser dependencies.
+
+Serve the included synthetic snapshot locally:
+
+```bash
+python -m http.server 8000 --directory frontend
+```
+
+Open `http://localhost:8000`. To regenerate the snapshot with the Python dependencies installed:
+
+```bash
+# Bundled synthetic observations
+python scripts/export_dashboard.py
+# An existing database, opened read-only
+python scripts/export_dashboard.py --database data/earlysignal.db
+```
+
+The exporter reuses the scoring and 14-day backtest pipeline and writes `frontend/data.json`. It labels demo, mixed, and imported datasets and includes their observation date. The website displays a **snapshot**, not a live feed; regenerate and republish its static files to update the hosted results. The scheduled workflow below does not republish this website. Backtest metrics cover the full dataset, regardless of the dashboard filters.
+
 ## Quick start
 
 ```bash
